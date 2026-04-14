@@ -16,3 +16,75 @@
     <script src="sketch.js"></script>
   </body>
 </html>
+  <!-- =================================================================== -->
+  <!-- ===== 請將此區塊程式碼複製到您每個作品頁面的 <body> 結尾處 ===== -->
+  <!-- =================================================================== -->
+
+  <!-- 引入 p5.js 函式庫 (返回動畫需要) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+
+  <!-- 連結到主頁的 CSS (讀取 index.html 共用的按鈕樣式) -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- "BACK HOME" 按鈕的 HTML 結構 -->
+  <a id="back-home" class="back-home-link">
+    <span class="star-symbol">★</span>
+    BACK HOME
+  </a>
+
+  <!-- 處理返回按鈕點擊與滿天星轉場動畫的 Script -->
+  <script>
+    document.getElementById('back-home').addEventListener('click', (e) => {
+      e.preventDefault(); // 防止連結立即跳轉
+
+      // 動態創建並顯示轉場疊加層
+      const overlay = document.createElement('div');
+      overlay.id = 'transition-overlay';
+      
+      // 透過 JS 直接補上全螢幕蓋版的樣式
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.backgroundColor = '#0b0c10';
+      overlay.style.zIndex = '9999';
+      overlay.style.display = 'block';
+      document.body.appendChild(overlay);
+
+      const homeUrl = 'index.html'; // 返回主頁的 URL
+
+      // 創建 p5 實例來繪製「由上往下掉滿星雨」動畫
+      new p5(s => {
+        let stars = [];
+        s.setup = () => {
+          s.createCanvas(s.windowWidth, s.windowHeight).parent(overlay);
+          for (let i = 0; i < 400; i++) {
+            stars.push({
+              x: s.random(s.width),
+              y: s.random(-s.height, 0), // 從螢幕上方開始
+              speed: s.random(5, 15),
+              size: s.random(1, 4)
+            });
+          }
+          // 動畫播放 1.5 秒後，跳轉回主頁
+          setTimeout(() => {
+            window.location.href = homeUrl;
+          }, 1500);
+        };
+
+        s.draw = () => {
+          s.background(11, 12, 16, 180); // 帶透明度製造拖影感
+          s.noStroke();
+          s.fill(255);
+          for (let star of stars) {
+            star.y += star.speed;
+            s.ellipse(star.x, star.y, star.size);
+            if (star.y > s.height) {
+              star.y = s.random(-100, -10); // 掉到底部後重置回上方
+            }
+          }
+        };
+      });
+    });
+  </script>
