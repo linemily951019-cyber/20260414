@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>時光記憶圖譜 - 學習成果展</title>
+  <!-- 避免瀏覽器預設請求 favicon 產生 404 錯誤 -->
+  <link rel="icon" href="data:,">
+  <!-- 引入 p5.js 函式庫 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- 左側：p5.js 繪製的時間軸與發光藤蔓 -->
+    <div id="canvas-container"></div>    
+  </div>
+
+  <!-- 用於轉場動畫的疊加層 -->
+  <div id="transition-overlay"></div>
+
+  <!-- 引入主要的 p5.js 程式碼 -->
+  <script src="sketch.js"></script>
+</body>
+</html>
